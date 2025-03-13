@@ -79,10 +79,9 @@ public class Controller implements Initializable {
     private void fill_quotes(List<String> input) {
         int i = 0;
         for (String l : input) {
-            if (l.length() > 0) {
-                if (l.charAt(0) == '$') i++;
-                else if (!(l.charAt(0) == '#')) quotes.get(i).add(l);
-            }
+            if (l.length() == 0) continue;
+            else if (l.charAt(0) == '$') i++;
+            else if (!(l.charAt(0) == '#')) quotes.get(i).add(l);
         }
     }
 }
