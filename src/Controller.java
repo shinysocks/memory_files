@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -20,6 +21,8 @@ public class Controller implements Initializable {
     private boolean WIDTH_SET = false;
     private boolean ANIMATING = false;
     private final int QUOTES_CAPACITY = 3;
+    private final String BUTTON_IDLE = "-fx-background-color: #f4f0db; -fx-background-radius: 30; -fx-border-radius: 30";
+    private final String BUTTON_HOVER = "-fx-background-color: #38eb94; -fx-background-radius: 30; -fx-border-radius: 30";
     private ArrayList<ArrayList<String>> quotes = new ArrayList<ArrayList<String>>(QUOTES_CAPACITY);
 
     @FXML
@@ -48,6 +51,16 @@ public class Controller implements Initializable {
             int random_index = (int) (Math.random() * quotes.get(quote_subset_index).size());
             animate(quotes.get(quote_subset_index).get(random_index));
         }
+    }
+
+    @FXML
+    private void button_hover(MouseEvent e) {
+        ((Button) e.getSource()).setStyle(BUTTON_HOVER);
+    }
+
+    @FXML
+    private void button_default(MouseEvent e) {
+        ((Button) e.getSource()).setStyle(BUTTON_IDLE);
     }
 
     private void animate(String text) {
