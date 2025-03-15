@@ -21,8 +21,14 @@ public class Controller implements Initializable {
     private boolean WIDTH_SET = false;
     private boolean ANIMATING = false;
     private final int QUOTES_CAPACITY = 3;
-    private final String BUTTON_IDLE = "-fx-background-color: #f4f0db; -fx-background-radius: 30; -fx-border-radius: 30";
-    private final String BUTTON_HOVER = "-fx-background-color: #38eb94; -fx-background-radius: 30; -fx-border-radius: 30";
+    private final String BUTTON_IDLE = "-fx-background-color: #f4f0db;" +
+            "-fx-background-radius: 30;" +
+            "-fx-border-radius: 30;" +
+            "-fx-text-fill: black;";
+    private final String BUTTON_HOVER = "-fx-background-color: black;" +
+            "-fx-background-radius: 30;" +
+            "-fx-border-radius: 30;" +
+            "-fx-text-fill: #f4f0db;";
     private ArrayList<ArrayList<String>> quotes = new ArrayList<ArrayList<String>>(QUOTES_CAPACITY);
 
     @FXML
@@ -70,7 +76,7 @@ public class Controller implements Initializable {
         final AtomicInteger i = new AtomicInteger(0);
         KeyFrame frame = new KeyFrame(
             Duration.millis(30 + (long) (Math.random() * 20)),
-            e -> {
+            _ -> {
                 if (i.get() > quoted_text.length())
                     timeline.stop();
                 else
@@ -80,7 +86,7 @@ public class Controller implements Initializable {
 
         timeline.getKeyFrames().add(frame);
         timeline.setCycleCount(quoted_text.length());
-        timeline.setOnFinished(e -> ANIMATING = false);
+        timeline.setOnFinished(_ -> ANIMATING = false);
         timeline.play();
     }
 

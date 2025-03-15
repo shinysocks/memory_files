@@ -1,20 +1,20 @@
 # lines starting with hashtags are ignored
 # dollar sign ($) indicates a separation between sections
 
-# advice
+# ADVICE
 It always seems impossible until it’s done.
 Stay hungry, stay foolish.
 Laugh as much as you breathe and love as long as you live.
 If I’m gonna tell a real story, I’m gonna start with my name.
 
-$ something new
+$ POEMS
 
 Normality is a paved road: it’s comfortable to walk but no flowers grow.Normality is a paved road: it’s comfortable to walk but no flowers grow.
 Simplicity is the ultimate sophistication.
 Let the beauty of what you love be what you do.
 Happiness depends upon ourselves.
 
-$ on happiness..
+$ SOMETHING NEW
 
 Happiness depends upon ourselves.
 I can and I will.
