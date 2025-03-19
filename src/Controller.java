@@ -75,7 +75,7 @@ public class Controller implements Initializable {
         final Timeline timeline = new Timeline();
         final AtomicInteger i = new AtomicInteger(0);
         KeyFrame frame = new KeyFrame(
-            Duration.millis(30 + (long) (Math.random() * 20)),
+            Duration.millis(50 + (long) (Math.random() * 20)),
             _ -> {
                 if (i.get() > quoted_text.length())
                     timeline.stop();
