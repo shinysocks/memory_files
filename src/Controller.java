@@ -1,9 +1,7 @@
-import java.io.IOException;
+import java.io.File;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,13 +12,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class Controller implements Initializable {
     private boolean WIDTH_SET = false;
-    private boolean ANIMATING = false;
-    private final int QUOTES_CAPACITY = 3;
+    private boolean PLAYING = false;
+    private final int AUDIO_CAPACITY = 3;
+    private final String AUDIO_PATH = "audio/";
     private final String BUTTON_IDLE = "-fx-background-color: #f4f0db;" +
             "-fx-background-radius: 30;" +
             "-fx-border-radius: 30;" +
@@ -29,33 +29,53 @@ public class Controller implements Initializable {
             "-fx-background-radius: 30;" +
             "-fx-border-radius: 30;" +
             "-fx-text-fill: #f4f0db;";
-    private ArrayList<ArrayList<String>> quotes = new ArrayList<ArrayList<String>>(QUOTES_CAPACITY);
+    private ArrayList<ArrayList<SimpleEntry<String, AudioClip>>> audio = 
+            new ArrayList<ArrayList<SimpleEntry<String, AudioClip>>>(AUDIO_CAPACITY);
 
     @FXML
     private Text out;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for (int i = 0; i < QUOTES_CAPACITY; i++)
-            quotes.add(new ArrayList<String>());
+         for (int i = 0; i < AUDIO_CAPACITY; i++)
+                audio.add(new ArrayList<SimpleEntry<String, AudioClip>>());
 
-        try {
-			fill_quotes(Files.readAllLines(Path.of("quotes.txt")));
-		} catch (IOException e) {
-            System.err.println("cannot read quotes.txt, make sure it exists.");
-            System.exit(0);
-		}
+        int i = 0;
+        for (File d : new File(AUDIO_PATH).listFiles()) {
+            if (d.isDirectory()) {
+                for (File f : d.listFiles()) {
+                    String name = f.getName();
+                    AudioClip clip = new AudioClip(f.toURI().toString());
+                    var entry = new SimpleEntry<String, AudioClip>(name, clip);
+                    audio.get(i).add(entry);
+                }
+                i++;
+            }
+        }
     }
 
     @FXML
     private void button_clicked(ActionEvent e) {
         if (!WIDTH_SET) set_out_wrapping_width();
 
-        if (!ANIMATING) {
+        if (!PLAYING) {
             String id = ((Button) e.getSource()).getId();
-            int quote_subset_index = Integer.valueOf(id);
-            int random_index = (int) (Math.random() * quotes.get(quote_subset_index).size());
-            animate(quotes.get(quote_subset_index).get(random_index));
+            int audio_subset_index = Integer.valueOf(id);
+            System.out.println("selected: " + audio_subset_index);
+            int random_index = (int) (Math.random() * audio.get(audio_subset_index).size());
+
+            var entry = audio.get(audio_subset_index).get(random_index);
+            var clip = entry.getValue();
+            animate_text(entry.getKey().substring(0, entry.getKey().length() - 4));
+            new Thread(new Runnable() {
+				@Override
+				public void run() {
+                    PLAYING = true;
+                    clip.play();
+                    while (clip.isPlaying()) {} // manually block thread until clip is done
+                    PLAYING = false;
+				}
+            }).start();
         }
     }
 
@@ -69,13 +89,12 @@ public class Controller implements Initializable {
         ((Button) e.getSource()).setStyle(BUTTON_IDLE);
     }
 
-    private void animate(String text) {
-        ANIMATING = true;
+    private void animate_text(String text) {
         final String quoted_text = "\"" + text + "\"";
         final Timeline timeline = new Timeline();
         final AtomicInteger i = new AtomicInteger(0);
         KeyFrame frame = new KeyFrame(
-            Duration.millis(50 + (long) (Math.random() * 20)),
+            Duration.millis(100),
             _ -> {
                 if (i.get() > quoted_text.length())
                     timeline.stop();
@@ -86,21 +105,11 @@ public class Controller implements Initializable {
 
         timeline.getKeyFrames().add(frame);
         timeline.setCycleCount(quoted_text.length());
-        timeline.setOnFinished(_ -> ANIMATING = false);
         timeline.play();
     }
 
     private void set_out_wrapping_width() {
         out.setWrappingWidth(out.getScene().getWidth() / 1.5);
         WIDTH_SET = true;
-    }
-
-    private void fill_quotes(List<String> input) {
-        int i = 0;
-        for (String l : input) {
-            if (l.length() == 0) continue;
-            else if (l.charAt(0) == '$') i++;
-            else if (!(l.charAt(0) == '#')) quotes.get(i).add(l);
-        }
     }
 }
