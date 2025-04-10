@@ -2,6 +2,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -37,11 +39,16 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-         for (int i = 0; i < AUDIO_CAPACITY; i++)
+        for (int i = 0; i < AUDIO_CAPACITY; i++)
                 audio.add(new ArrayList<SimpleEntry<String, AudioClip>>());
 
         int i = 0;
-        for (File d : new File(AUDIO_PATH).listFiles()) {
+        File[] dirs = new File(AUDIO_PATH).listFiles();
+        
+        // sort alphabetically so buttons map to correct directories
+        Arrays.sort(dirs);
+
+        for (File d : dirs) {
             if (d.isDirectory()) {
                 for (File f : d.listFiles()) {
                     String name = f.getName();

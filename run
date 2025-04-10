@@ -1,0 +1,4 @@
+#!/bin/bash
+
+git pull || $(echo "not connected to internet" ; exit 1)
+gradle run
