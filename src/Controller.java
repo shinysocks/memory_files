@@ -51,10 +51,12 @@ public class Controller implements Initializable {
         for (File d : dirs) {
             if (d.isDirectory()) {
                 for (File f : d.listFiles()) {
-                    String name = f.getName();
-                    AudioClip clip = new AudioClip(f.toURI().toString());
-                    var entry = new SimpleEntry<String, AudioClip>(name, clip);
-                    audio.get(i).add(entry);
+                    if (!f.isHidden()) {
+                        String name = f.getName();
+                        AudioClip clip = new AudioClip(f.toURI().toString());
+                        var entry = new SimpleEntry<String, AudioClip>(name, clip);
+                        audio.get(i).add(entry);
+                    }
                 }
                 i++;
             }
