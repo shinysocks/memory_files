@@ -1,4 +1,5 @@
 #!/bin/bash
 
+cd ~/Desktop/memory_files
 git pull || $(echo "not connected to internet" ; exit 1)
 gradle run
