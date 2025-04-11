@@ -10,17 +10,17 @@
    <children>
       <VBox alignment="BASELINE_CENTER" spacing="75.0" style="-fx-background-color: #154212;">
           <HBox alignment="CENTER" spacing="50.0" style="-fx-background-color: #154212;">
-              <Button id="0" minHeight="125.0" minWidth="200.0" mnemonicParsing="false" onAction="#button_clicked" onMouseEntered="#button_hover" onMouseExited="#button_default" style="-fx-background-color: #F4F0DB; -fx-border-radius: 30; -fx-background-radius: 30;" text="I" textAlignment="CENTER">
+              <Button id="0" minHeight="125.0" minWidth="200.0" mnemonicParsing="false" onAction="#button_clicked" onMouseEntered="#button_hover" onMouseExited="#button_default" style="-fx-background-color: #F4F0DB; -fx-border-radius: 30; -fx-background-radius: 30;" text="Morning" textAlignment="CENTER">
                <font>
                   <Font name="FiraCode Nerd Font SemBd" size="30.0" />
                </font>
             </Button>
-              <Button id="1" minHeight="125.0" minWidth="200.0" mnemonicParsing="false" onAction="#button_clicked" onMouseEntered="#button_hover" onMouseExited="#button_default" style="-fx-background-color: #F4F0DB; -fx-border-radius: 30; -fx-background-radius: 30;" text="LOVE" textAlignment="CENTER">
+              <Button id="1" minHeight="125.0" minWidth="200.0" mnemonicParsing="false" onAction="#button_clicked" onMouseEntered="#button_hover" onMouseExited="#button_default" style="-fx-background-color: #F4F0DB; -fx-border-radius: 30; -fx-background-radius: 30;" text="Evening" textAlignment="CENTER">
                <font>
                   <Font name="FiraCode Nerd Font SemBd" size="30.0" />
                </font>
             </Button>
-              <Button id="2" minHeight="125.0" minWidth="200.0" mnemonicParsing="false" onAction="#button_clicked" onMouseEntered="#button_hover" onMouseExited="#button_default" style="-fx-background-color: #F4F0DB; -fx-border-radius: 30; -fx-background-radius: 30;" text="YOU" textAlignment="CENTER">
+              <Button id="2" minHeight="125.0" minWidth="200.0" mnemonicParsing="false" onAction="#button_clicked" onMouseEntered="#button_hover" onMouseExited="#button_default" style="-fx-background-color: #F4F0DB; -fx-border-radius: 30; -fx-background-radius: 30;" text="Night" textAlignment="CENTER">
                <font>
                   <Font name="FiraCode Nerd Font SemBd" size="30.0" />
                </font>
